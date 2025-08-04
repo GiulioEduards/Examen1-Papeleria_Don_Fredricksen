@@ -21,6 +21,19 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         //
+         $request->validate([
+            'nombre' => 'required',
+            'precio' => 'required',
+            'marcas_id' => 'required|exists:marcas,id'
+        ]);
+
+        $producto = Producto::create($request->all());
+
+        return response()->json([
+            'mensaje' => 'Producto creado exitosamente',
+            'producto' => $producto->load('marca') // Cargamos la relación para la respuesta
+        ], 201);
+
     }
 
     /**
@@ -46,6 +59,6 @@ class ProductoController extends Controller
     {
         //
 
-        
+
     }
 }
