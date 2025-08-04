@@ -15,4 +15,9 @@ class Producto extends Model
         'precio',
         'marcas_id'
     ];
+        public function marca()
+    {
+        return $this->belongsTo(Marca::class, 'marcas_id');
+        // Si tu clave foránea tiene otro nombre, cámbialo aquí
+    }
 }

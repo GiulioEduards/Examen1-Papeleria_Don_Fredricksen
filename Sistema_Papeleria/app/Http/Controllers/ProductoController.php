@@ -21,7 +21,7 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         //
-         $request->validate([
+        $request->validate([
             'nombre' => 'required',
             'precio' => 'required',
             'marcas_id' => 'required|exists:marcas,id'
@@ -31,9 +31,7 @@ class ProductoController extends Controller
 
         return response()->json([
             'mensaje' => 'Producto creado exitosamente',
-            'producto' => $producto->load('marca') // Cargamos la relación para la respuesta
         ], 201);
-
     }
 
     /**
@@ -41,15 +39,52 @@ class ProductoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $producto = Producto::with('marca')->find($id);
+
+        if (!$producto) {
+            return response()->json(
+                [
+                    'mensaje' => 'Producto no encontrado'
+                ],
+                404
+            );
+        }
+
+        return response()->json($producto);
     }
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        $producto = Producto::find($id);
+
+        if (!$producto) {
+            return response()->json(
+                [
+                    'mensaje' => 'Producto no encontrado'
+                ],
+                404
+            );
+        }
+
+        $request->validate([
+            'nombre' => 'sometimes|required',
+            'precio' => 'sometimes|required|numeric|min:0',
+            'marcas_id' => 'sometimes|required|exists:marcas,id'
+        ]);
+
+        $producto->update($request->all());
+
+        return response()->json(
+            [
+                'mensaje' => 'Producto actualizado correctamente',
+                'producto' => $producto->load('marca')
+            ],
+            200
+        );
     }
 
     /**
@@ -57,8 +92,23 @@ class ProductoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+         $producto = Producto::find($id);
 
+        if (!$producto) {
+            return response()->json(
+                [
+                    'mensaje' => 'Producto no encontrado'
+                ],
+                404
+            );
+        }
 
+        $producto->delete();
+        return response()->json(
+            [
+                'mensaje' => 'Producto eliminado correctamente',
+            ],
+            200
+        );
     }
 }
