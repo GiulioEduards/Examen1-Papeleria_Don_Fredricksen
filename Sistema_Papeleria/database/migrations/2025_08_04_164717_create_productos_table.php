@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->decimal('price', 10, 2); // Precio con 10 dígitos en total y 2 decimales
+            $table->string('nombre');
+            $table->decimal('precio', 10, 2); // Precio con 10 dígitos en total y 2 decimales
 
             $table->unsignedBigInteger('marcas_id');
             $table->foreign('marcas_id')->references('id')->on('marcas');
 
-            //$table->foreignId('marcas_id')->constrained()->onDelete('cascade'); // Relación con marcas
             $table->timestamps();
         });
     }

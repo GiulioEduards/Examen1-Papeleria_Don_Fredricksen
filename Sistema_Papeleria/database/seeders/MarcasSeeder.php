@@ -16,11 +16,11 @@ class MarcasSeeder extends Seeder
         //insertar datos para marcas
         DB:: table("marcas")->insert([
             
-            ['name' => 'Sabonis', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Stabilo', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Big', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'American Iris', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Faber Castell', 'created_at' => now(), 'updated_at' => now()],
+            ['nombre' => 'Sabonis', 'created_at' => now(), 'updated_at' => now()],
+            ['nombre' => 'Stabilo', 'created_at' => now(), 'updated_at' => now()],
+            ['nombre' => 'Big', 'created_at' => now(), 'updated_at' => now()],
+            ['nombre' => 'American Iris', 'created_at' => now(), 'updated_at' => now()],
+            ['nombre' => 'Faber Castell', 'created_at' => now(), 'updated_at' => now()],
         
         ]);
     }
