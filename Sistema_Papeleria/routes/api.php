@@ -17,11 +17,12 @@ use Illuminate\Support\Facades\Route;
 
 
 use App\Http\Controllers\MarcaController;
-
-
- 
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\UserController;
 
 Route::apiResource('marcas', MarcaController::class);
+Route::apiResource('productos', ProductoController::class);
+Route::apiResource('users', UserController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

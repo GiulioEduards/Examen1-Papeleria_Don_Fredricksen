@@ -20,7 +20,15 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required'
+        ]);
+        $marca = Marca::create($request->all());
+
+        return response()->json([
+            'mensaje' => 'Marca creada exitosamente',
+            'marca' => $marca
+        ], 201);
     }
 
     /**
@@ -29,6 +37,16 @@ class MarcaController extends Controller
     public function show(string $id)
     {
         //
+        $marca = Marca::find($id);
+
+        if (!$marca) {
+            return response()->json(
+                [
+                    'mensaje' => 'Marca encontrada'
+                ],
+                404
+            );
+        }
     }
 
     /**
@@ -37,6 +55,32 @@ class MarcaController extends Controller
     public function update(Request $request, string $id)
     {
         //
+
+        $marca = Marca::find($id);
+
+        if (!$marca) {
+            return response()->json(
+                [
+                    'mensaje' => 'Marca encontrada'
+                ],
+                404
+            );
+        }
+
+        $request->validate([
+            'nombre' => 'required'
+        ]);
+        $marca = Marca::create($request->all());
+
+        $marca->update($request->all());
+
+        return response()->json(
+            [
+                'mensaje' => 'Marca actualizada correctamente',
+                'marca' => $marca
+            ],
+            201
+        );
     }
 
     /**
@@ -45,5 +89,25 @@ class MarcaController extends Controller
     public function destroy(string $id)
     {
         //
+
+        $marca = Marca::find($id);
+
+        if (!$marca) {
+            return response()->json(
+                [
+                    'mensaje' => 'Marca encontrada'
+                ],
+                404
+            );
+        }
+
+        $marca->delete();
+        return response()->json(
+            [
+                'mensaje' => 'Marca eliminada correctamente',
+                
+            ],
+            200
+        );
     }
 }
